@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { Chat, Login, NotFound, Register} from 'views';
+import Auth from 'Auth';
+import { useEffect } from 'react';
+import AppRoute from 'AppRoute';
 
-function App() {
+export default function App() {
+  useEffect(() => {
+    Auth.init()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id='main-container' className='container-fluid'>
+      <Routes>
+        <Route path='/' element={<AppRoute can={Auth.auth} to='login'><Chat /></AppRoute>} />
+        <Route path='/register' element={<AppRoute can={Auth.guest} to='/'><Register /></AppRoute>} />
+        <Route path='/login' element={<AppRoute can={Auth.guest} to='/'><Login /></AppRoute>} />
+        <Route path='*' element={<NotFound />}/>
+      </Routes>
     </div>
-  );
+  )
 }
-
-export default App;
