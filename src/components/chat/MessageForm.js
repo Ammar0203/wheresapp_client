@@ -18,20 +18,24 @@ const MessageForm = props => {
     setMessage('');
   };
 
+  const onInput = e => {
+    if (!lastType || moment() - lastType > 2000){
+      setLastType(moment());
+      props.sendType();
+    }
+  };
+  
   const onKeyDown = e => {
     if(e.key === 'Enter' && !e.shiftKey){
       setLastType(false);
       onSend();
       e.preventDefault();
-    } else if (!lastType || moment() - lastType > 2000){
-      setLastType(moment());
-      // props.sendType();
-    }
+    } 
   };
 
   return (
     <div id="send-message">
-        <Input type="textarea" rows="1" onChange={onChange} onKeyDown={onKeyDown} value={message} placeholder="اكتب رسالتك هنا"/>
+        <Input type="textarea" rows="1" onChange={onChange} onKeyDown={onKeyDown} onInput={onInput} value={message} placeholder="اكتب رسالتك هنا"/>
         <i className="fa fa-send text-muted px-3 send" onClick={onSend}/>
     </div>
   );

@@ -2,22 +2,23 @@ import axios from "axios";
 
 const Auth = {
     login: user => {
-        localStorage.setItem('user', JSON.stringify(user))
-        axios.defaults.headers.common['Authorization'] = user.token
+        let token = user.token
+        localStorage.setItem('token', JSON.stringify(token))
+        axios.defaults.headers.common['Authorization'] = token
     },
     init: () => {
-        let user = JSON.parse(localStorage.getItem('user'))
-        axios.defaults.headers.common['Authorization'] = user !== null ? user.token : ''
+        let token = JSON.parse(localStorage.getItem('token'))
+        axios.defaults.headers.common['Authorization'] = token !== null ? token : ''
     },
-    auth: () => localStorage.getItem('user') !== null,
-    guest: () => localStorage.getItem('user') === null,
+    auth: () => localStorage.getItem('token') !== null,
+    guest: () => localStorage.getItem('token') === null,
     logout: () => {
         delete axios.defaults.headers.common['Authorization']
-        localStorage.removeItem('user')
+        localStorage.removeItem('token')
     },
     getToken: () => {
-        let user = JSON.parse(localStorage.getItem('user'))
-        return user !== null ? user.token : ''
+        let token = JSON.parse(localStorage.getItem('token'))
+        return token !== null ? token : ''
     }
 }
 

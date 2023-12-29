@@ -3,8 +3,11 @@ import { Row } from 'reactstrap';
 
 const ContactHeader = props => (
   <Row className="heading">
-    <Avatar />
-    <div>جهات الاتصال</div>
+    <Avatar src={props.user.avatar} />
+      <div>جهات الاتصال</div>
+      <div className="mr-auto nav-link" onClick={props.toggle} >
+        <i className="fa fa-bars" />
+      </div>
   </Row>
 )
 
