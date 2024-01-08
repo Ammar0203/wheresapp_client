@@ -5,9 +5,7 @@ import { useEffect } from 'react';
 import AppRoute from 'AppRoute';
 
 export default function App() {
-  useEffect(() => {
-    Auth.init()
-  }, [])
+  Auth.init()
 
   return (
     <div id='main-container' className='container-fluid'>
