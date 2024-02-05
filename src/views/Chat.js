@@ -18,6 +18,7 @@ export default function Chat() {
         profile: false
     })
     const socket = useRef(null)
+    const timeoutRef = useRef(null)
     
     useEffect(() => {
         initSocketConnection()
@@ -55,7 +56,7 @@ export default function Chat() {
                 navigate('/login')
             }
         })
-        socket.current.on('data', (user, contacts, messages) => {
+        socket.current.on('data', ({user, contacts, messages}) => {
             setState(prev => {
                 return {
                     ...prev,
@@ -84,7 +85,10 @@ export default function Chat() {
     function onTypingMessage(sender) {
         if(state.contact.id !== sender) return;
         setState(prev => { return {...prev, typing: sender} })
-        setTimeout(() => setState(prev => { return {...prev, typing: false} }), 2000)
+        clearTimeout(timeoutRef.current)
+        timeoutRef.current = setTimeout(() => {
+            setState(prev => {return {...prev, typing: false}})
+        }, 2000)
     }
 
     function sendType() {

@@ -8,7 +8,7 @@ const Messages = (props) => {
     useEffect(() => {
         const container = containerRef.current;
 
-        if (!isScrolledUpRef.current) {
+        if (!isScrolledUpRef.current || props.messages[props.messages.length-1].sender === props.user.id) {
             container.scrollTop = container.scrollHeight;
         }
     }, [props.messages]);
