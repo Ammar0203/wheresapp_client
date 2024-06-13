@@ -124,7 +124,8 @@ export default function Chat() {
     }
 
     function onNewUser(user) {
-        setState(prev => { return {...prev, user} })
+        const contacts = state.contacts.concat(user)
+        setState(prev => { return {...prev, contacts} })
     }
 
     function onChatNavigate(contact) {
